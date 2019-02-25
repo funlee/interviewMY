@@ -1,23 +1,10 @@
-/**
- * 绘制圆形
- */
-export class Circle {
+class Basic {
   constructor(x, y, color, id, radius) {
     this.x = x || 0;
     this.y = y || 0;
     this.color = color || 'rgba(0,0,0,1)';
     this.id = id || 1;
     this.radius = radius || 12;
-  }
-  // 填充绘制
-  fill (cxt) {
-    cxt.save();
-    cxt.fillStyle = this.color;
-    cxt.beginPath();
-    cxt.arc(this.x, this.y, this.radius, 0, 360 * Math.PI / 180, false);
-    cxt.closePath();
-    cxt.fill();
-    cxt.restore();
   }
   // 获取矩形边界，用于碰撞检测
   getRect() {
@@ -41,17 +28,31 @@ export class Circle {
     }
   }
 }
+/**
+ * 绘制圆形
+ */
+export class Circle extends Basic {
+  constructor(x, y, color, id, radius) {
+    super(x, y, color, id, radius);
+  }
+  // 填充绘制
+  fill (cxt) {
+    cxt.save();
+    cxt.fillStyle = this.color;
+    cxt.beginPath();
+    cxt.arc(this.x, this.y, this.radius, 0, 360 * Math.PI / 180, false);
+    cxt.closePath();
+    cxt.fill();
+    cxt.restore();
+  }
+}
 
 /**
  * 绘制三角形
  */
-export class Triangle {
+export class Triangle extends Basic{
   constructor(x, y, color, id, radius) {
-    this.x = x || 0;
-    this.y = y || 0;
-    this.color = color || 'rgba(0,0,0,1)';
-    this.id = id || 1;
-    this.radius = radius || 12;
+    super(x, y, color, id, radius);
   }
   // 填充绘制
   fill (cxt) {
@@ -68,40 +69,13 @@ export class Triangle {
     cxt.fill();
     cxt.restore();
   }
-  // 获取矩形边界，用于碰撞检测
-  getRect() {
-    var rect = {
-      x: this.x - this.radius,
-      y: this.y - this.radius,
-      width: this.radius * 2,
-      height: this.radius * 2
-    };
-    return rect;
-  }
-  // 用于检测捕获
-  checkMouse(mouse) {
-    var dx = mouse.x - this.x;
-    var dy = mouse.y - this.y;
-    var distance = Math.sqrt(dx * dx + dy * dy);
-    if (distance < this.radius) {
-      return true
-    } else {
-      return false
-    }
-  }
 }
-
 /**
  * 绘制五角星
  */
-
-export class Star {
+export class Star extends Basic {
   constructor(x, y, color, id, radius) {
-    this.x = x || 0;
-    this.y = y || 0;
-    this.color = color || 'rgba(0,0,0,1)';
-    this.id = id || 1;
-    this.radius = radius || 12;
+    super(x, y, color, id, radius);
   }
   // 填充绘制
   fill(cxt) {
@@ -116,26 +90,4 @@ export class Star {
     cxt.fill();
     cxt.restore();
   }
-  // 获取矩形边界，用于碰撞检测
-  getRect() {
-    var rect = {
-      x: this.x - this.radius,
-      y: this.y - this.radius,
-      width: this.radius * 2,
-      height: this.radius * 2
-    };
-    return rect;
-  }
-  // 用于检测捕获
-  checkMouse(mouse) {
-    var dx = mouse.x - this.x;
-    var dy = mouse.y - this.y;
-    var distance = Math.sqrt(dx * dx + dy * dy);
-    if (distance < this.radius) {
-      return true
-    } else {
-      return false
-    }
-  }
 }
-

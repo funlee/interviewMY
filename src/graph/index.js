@@ -7,7 +7,7 @@ const graphChart = {
    */
   init() {
     const cnv = document.querySelector('#graph');
-    const cxt = cnv.getContext('2d');
+    const cxt = cnv.getContext('2d', {alpha: false});
     const num = 1000;
     const type = 'circle';
     this.state = {
@@ -47,7 +47,6 @@ const graphChart = {
   draw(graphs) {
     const { cxt, cnv } = this.state;
     cxt.clearRect(0, 0, cnv.width, cnv.height);
-
     graphs.forEach(graph => {
       graph.fill(cxt);
     })
@@ -76,6 +75,7 @@ const graphChart = {
       })
       if (catchGraphs.length > 0) {
         const copyGraphs = deepClone(graphs);
+      
         const { id } = catchGraphs[catchGraphs.length - 1];
         const reRenderGraph = copyGraphs.splice(id, 1)[0];
         reRenderGraph.color = changeAlpha(reRenderGraph.color, false);
